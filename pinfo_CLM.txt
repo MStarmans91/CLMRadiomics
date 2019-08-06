@@ -1,0 +1,11 @@
+Patient	GP
+CLMRadiomics-001	1
+CLMRadiomics-002	1
+CLMRadiomics-003	1
+CLMRadiomics-004	1
+CLMRadiomics-005	1
+CLMRadiomics-006	0
+CLMRadiomics-007	0
+CLMRadiomics-008	0
+CLMRadiomics-009	0
+CLMRadiomics-010	0

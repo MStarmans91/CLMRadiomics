@@ -4,10 +4,14 @@ histopathological growth patterns in colorectal liver metastases on CT
 imaging using a radiomics approach."
 
 ## Installation
-Only the PREDICT package, version 2.1.3, and the subsequent dependencies are required
-for the feature extraction, which can be installed through pip:
+For the feature extraction, only the PREDICT package, version 2.1.3,
+and the subsequent dependencies are required, which can be installed through pip:
 
     pip install "PREDICT==2.1.3"
+
+For the model optimization, additionally WORC, version 2.1.3, is required:
+
+    pip install "WORC==2.1.3"
 
 ## Usage
 The ExtractFeatures.py script can be used to extract all features. We provided
