@@ -1,7 +1,7 @@
 # CLMRadiomicsFeatures
 Script to compute the features used in the paper "Classification of
 histopathological growth patterns in colorectal liver metastases on CT
-imaging using a radiomics approach."
+imaging using a radiomics approach.", M.P.A. Starmans, F. E. Buisman et al. 2019.
 
 ## Installation
 For the feature extraction, only the PREDICT package, version 2.1.3,
