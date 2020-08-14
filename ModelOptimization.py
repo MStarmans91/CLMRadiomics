@@ -4,51 +4,14 @@ import glob
 
 
 def editconfig(config):
-    config['General']['Segmentix'] = 'True'
-
-    config['PREDICTGeneral']['Joblib_ncores'] = '1'
-    config['PREDICTGeneral']['Joblib_backend'] = 'threading'
-
+    # Some specific configuration alterations
     config['Normalize']['ROI'] = 'False'  # No Normalization for CT
 
-    config['ImageFeatures']['coliage'] = 'False'
-    config['ImageFeatures']['vessel'] = 'True'
-    config['ImageFeatures']['phase'] = 'True'
-    config['ImageFeatures']['log'] = 'True'
     config['ImageFeatures']['image_type'] = 'CT'
     config['ImageFeatures']['vessel_radius'] = '0'  # tumors can be really small
 
-    config['Featsel']['Variance'] = 'True, False'
-
-    config['SelectFeatGroup']['shape_features'] = 'True, False'
-    config['SelectFeatGroup']['histogram_features'] = 'True, False'
-    config['SelectFeatGroup']['orientation_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_Gabor_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_GLCM_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_GLCMMS_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_GLRLM_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_GLSZM_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_NGTDM_features'] = 'True, False'
-    config['SelectFeatGroup']['texture_LBP_features'] = 'True, False'
-    config['SelectFeatGroup']['patient_features'] = 'True, False'
-    config['SelectFeatGroup']['semantic_features'] = 'True, False'
-    config['SelectFeatGroup']['coliage_features'] = 'False'
-    config['SelectFeatGroup']['vessel_features'] = 'True, False'
-    config['SelectFeatGroup']['phase_features'] = 'True, False'
-    config['SelectFeatGroup']['log_features'] = 'True, False'
-
-    config['CrossValidation']['N_iterations'] = '100'
-
-    config['Genetics']['label_names'] = 'GP'
-    config['Genetics']['modus'] = 'singlelabel'
-
-    config['HyperOptimization']['N_iterations'] = '100000'
-    config['HyperOptimization']['n_jobspercore'] = '4000'
-
-    config['SampleProcessing']['SMOTE'] = 'True'
-    config['SampleProcessing']['Oversampling'] = 'False'
-
-    config['Ensemble']['Use'] = 'False'
+    config['Labels']['label_names'] = 'GP'
+    config['Labels']['modus'] = 'singlelabel'
 
     return config
 
@@ -56,9 +19,9 @@ def editconfig(config):
 # Inputs
 name = 'WORC_CLM_GP'
 current_path = os.path.dirname(os.path.abspath(__file__))
-label_file = os.path.join(current_path, 'pinfo_CLM.txt')
-semantics_file = os.path.join(current_path, 'sem_CLM.txt')
-config = os.path.join(current_path, 'config_modeloptimization.ini')
+label_file = os.path.join(current_path, 'ExampleData', 'pinfo_CLM.txt')
+semantics_file = os.path.join(current_path, 'ExampleData', 'sem_CLM.txt')
+config = os.path.join(current_path, 'ExampleData', 'config_modeloptimization.ini')
 
 # Altough you can also supply the raw image, we will supply the extracted
 # features directly
@@ -80,7 +43,7 @@ network = WORC.WORC(name)
 # Altough it is a configparser object, it works similar as a dictionary
 config = network.defaultconfig()
 
-# The default config from the WORC 2.1.2 version we used, was a stripped
+# The default config from the WORC 2.1.3 version we used, was a stripped
 # version in order to get a quick result. The actual default used for normal
 # experiments is created through the editconfig function.
 config = editconfig(config)
