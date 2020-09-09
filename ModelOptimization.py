@@ -4,13 +4,16 @@ import glob
 
 
 def editconfig(config):
+    # Use Segmentix to fill holes if present in the segmentation
+    config['General']['Segmentix'] = 'True'
+
     # Some specific configuration alterations
-    config['Normalize']['ROI'] = 'False'  # No Normalization for CT
+    config['Preprocessing']['Normalize'] = 'False'  # No Normalization for CT
 
     config['ImageFeatures']['image_type'] = 'CT'
     config['ImageFeatures']['vessel_radius'] = '0'  # tumors can be really small
 
-    config['Labels']['label_names'] = 'GP'
+    config['Labels']['label_names'] = 'BRAF'
     config['Labels']['modus'] = 'singlelabel'
 
     return config
@@ -20,12 +23,12 @@ def editconfig(config):
 name = 'WORC_CLM_GP'
 current_path = os.path.dirname(os.path.abspath(__file__))
 label_file = os.path.join(current_path, 'ExampleData', 'pinfo_CLM.txt')
-semantics_file = os.path.join(current_path, 'ExampleData', 'sem_CLM.txt')
-config = os.path.join(current_path, 'ExampleData', 'config_modeloptimization.ini')
+semantics_file = os.path.join(current_path, 'ExampleData', 'sem_CLM.csv')
+config = os.path.join(current_path, 'ExampleData', 'config.ini')
 
 # Altough you can also supply the raw image, we will supply the extracted
 # features directly
-feature_files = glob.glob(os.path.join(current_path, 'ExampleData', 'ExampleFeaturesCLMRadiomics*.hdf5'))
+feature_files = glob.glob(os.path.join(current_path, 'ExampleData', 'example_features_predict_CLMRadiomics-*.hdf5'))
 feature_files.sort()
 
 # As we only have a single feature file, we will repeat it to mimick
@@ -48,11 +51,12 @@ config = network.defaultconfig()
 # experiments is created through the editconfig function.
 config = editconfig(config)
 
-# NOTE: Since we now only use 10 "patients" in this example, we change one setting
+# NOTE: Since we now only use 10 "patients" in this example, we do not use resampling.
 # Do not do this for the full experiment.
-config['SampleProcessing']['SMOTE_neighbors'] = '1, 1'
+config['Resampling']['Use'] = '0.0'
 
-# Append the sources to be used
+# Append the sources to be used. When using images and segmentations, use the
+# images_train and segmentations_train instead of features_train object.
 network.features_train.append(features)
 network.labels_train.append(label_file)
 network.semantics_train.append(semantics_file)
